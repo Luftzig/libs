@@ -18,17 +18,20 @@ the hysteresis thresholding.
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import ndimage
+from scipy.misc import imread
 
 from skimage import filter
 
 
 # Generate noisy image of a square
-im = np.zeros((128, 128))
-im[32:-32, 32:-32] = 1
+# im = np.zeros((128, 128))
+# im[32:-32, 32:-32] = 1
+# 
+# im = ndimage.rotate(im, 15, mode='constant')
+# im = ndimage.gaussian_filter(im, 4)
+# im += 0.2 * np.random.random(im.shape)
 
-im = ndimage.rotate(im, 15, mode='constant')
-im = ndimage.gaussian_filter(im, 4)
-im += 0.2 * np.random.random(im.shape)
+im = imread('books.jpg')
 
 # Compute the Canny filter for two values of sigma
 features1 = filter.canny(im)
