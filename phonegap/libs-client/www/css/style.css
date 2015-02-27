@@ -13,9 +13,12 @@
 }
 
 .title {
+    font-family: "Ubuntu Condensed", sans-serif;
+}
+
+.menu .title {
     background-color: #448C49;
     color: #ffffff;
-    font-family: "Ubuntu Condensed", sans-serif;
 }
 
 .bar img.title {
@@ -26,6 +29,10 @@
     left: 0;
     z-index: 13;
     margin-left: 10px;
+}
+
+.bar img.static {
+    position: fixed;
 }
 
 .menu.menu-left .has-header {
