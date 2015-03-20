@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import me.libs.R;
 
 
 /**
@@ -22,6 +23,7 @@ import android.view.ViewGroup;
 public class Shelfie extends Fragment {
     private OnFragmentInteractionListener interactionListener;
     private Camera camera;
+    private ShelfiePreview preview;
 
     /**
      * Use this factory method to create a new instance of
