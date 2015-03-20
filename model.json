@@ -1,0 +1,21 @@
+{
+  "librarian": {
+    "id": "",
+    "username": "LibrarianLuke",
+    "email": "librarianluke@library.com",
+    "password": "secret"
+  },
+  "library": {
+    "id": "",
+    "librarian": "id",
+    "location": "geopoint",
+    "inventory": ["id1", "id2"]
+  },
+  "book" :{
+    "id": "",
+    "authors": ["Name", "Name2"],
+    "title": "Title",
+    "?isbn": "cushalaimashlecha",
+    "cover": "link/binary"
+  }
+}
