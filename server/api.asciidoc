@@ -1,0 +1,36 @@
+== Authentication
+
+=== Sign Up
+ PUT /auth/signup
+
+Sign Up for the Libs service; Generates and returns a client API key.
+
+[source,javascript]
+{
+    "username":"librarian",
+    "email":"librarian@library.com",
+    "password":"encryptedSecret"
+}
+
+[source,javascript]
+Status: 201 CREATED
+{
+    "apiKey":"hashedApiKey"
+}
+
+=== Login
+ POST /auth/login
+
+Log in to the Libs service; Generates a new client API key.
+
+[source,javascript]
+{
+    "username":"librarian",
+    "password":"encryptedsecret"
+}
+
+[source,javascript]
+Status: 200 CREATED
+{
+    "apiKey":"hashedApiKey"
+}
