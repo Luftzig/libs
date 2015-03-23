@@ -6,36 +6,39 @@ buildscript {
         classpath 'com.android.tools.build:gradle:1.0.0'
     }
 }
-apply plugin: 'com.android.application'
 
 repositories {
     jcenter()
 }
 
-android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+if (Boolean.valueOf(System.getProperty('buildClient', 'false'))) {
+    apply plugin: 'com.android.application'
 
-    defaultConfig {
-        applicationId "me.libs"
-        minSdkVersion 15
-        targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    android {
+        compileSdkVersion 21
+        buildToolsVersion "21.1.2"
+
+        defaultConfig {
+            applicationId "me.libs"
+            minSdkVersion 15
+            targetSdkVersion 21
+            versionCode 1
+            versionName "1.0"
+        }
+        buildTypes {
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_7
+            targetCompatibility JavaVersion.VERSION_1_7
+        }
+        }
+        dependencies {
+            compile fileTree(dir: 'libs', include: ['*.jar'])
+            compile 'com.android.support:appcompat-v7:21.+'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
-}
-
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.+'
 }
