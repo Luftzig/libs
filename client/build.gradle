@@ -35,10 +35,9 @@ if (Boolean.valueOf(System.getProperty('buildClient', 'false'))) {
             sourceCompatibility JavaVersion.VERSION_1_7
             targetCompatibility JavaVersion.VERSION_1_7
         }
-        }
-        dependencies {
-            compile fileTree(dir: 'libs', include: ['*.jar'])
-            compile 'com.android.support:appcompat-v7:21.+'
-        }
+    }
+    dependencies {
+        compile fileTree(dir: 'libs', include: ['*.jar'])
+        compile 'com.android.support:appcompat-v7:21.+'
     }
 }
