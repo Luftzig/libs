@@ -37,7 +37,41 @@ Log in to the Libs service; Generates a new client API key.
 }
 
 [source,javascript]
-Status: 200 CREATED
+Status: 200 OK
 {
     "apiKey":"hashedApiKey"
 }
+
+== Library
+=== Create Library
+ PUT /library/:username/:library_name
+
+Create a new library.
+
+[source,javascript]
+{
+    "geoLocation (optional)": "point"
+}
+
+[source,javascript]
+Status: 201 CREATED
+
+=== Update Library
+ POST /library/:username/:library_name
+
+Update the details of an existing library
+
+[source,javascript]
+{
+    "geoLocation (optional)": "point"
+}
+
+[source,javascript]
+Status: 200 OK
+
+=== Remove Library
+ DELETE /library/:username/:library_name
+
+Remove an existing library.
+[source,javascript]
+Status: 200 OK
