@@ -61,7 +61,7 @@ Status: 200 OK
 ]
 
 === Get Library
- GET /library/:username/:library_name
+ GET /library/:username/:library
 
 Fetch an existing library.
 
@@ -72,7 +72,7 @@ Status: 200 OK
 }
 
 === Create Library
- PUT /library/:username/:library_name
+ PUT /library/:username/:library
 
 Create a new library.
 
@@ -85,7 +85,7 @@ Create a new library.
 Status: 201 CREATED
 
 === Update Library
- POST /library/:username/:library_name
+ POST /library/:username/:library
 
 Update the details of an existing library
 
@@ -98,7 +98,7 @@ Update the details of an existing library
 Status: 200 OK
 
 === Remove Library
- DELETE /library/:username/:library_name
+ DELETE /library/:username/:library
 
 Remove an existing library.
 [source,javascript]
