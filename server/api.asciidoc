@@ -1,9 +1,8 @@
 = API
 
 The API is currently at version 1, so all documented paths are currently accessible via
-****
-/api/v1
-****
+
+ /api/v1
 
 == Authentication
 
@@ -43,6 +42,35 @@ Status: 200 OK
 }
 
 == Library
+=== Get Libraries
+ GET /library/:username
+
+Fetch all existing library.
+
+[source,javascript]
+Status: 200 OK
+[
+    {
+        "name": "library1",
+        "geoLocation (optional)": "point"
+    },
+    {
+        "name": "library2",
+        "geoLocation (optional)": "point"
+    }
+]
+
+=== Get Library
+ GET /library/:username/:library_name
+
+Fetch an existing library.
+
+[source,javascript]
+Status: 200 OK
+{
+    "geoLocation (optional)": "point"
+}
+
 === Create Library
  PUT /library/:username/:library_name
 
