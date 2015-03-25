@@ -1,5 +1,6 @@
 package me.libs.server;
 
+import me.libs.server.api.handler.LibraryHandler;
 import me.libs.server.api.handler.LogInHandler;
 import me.libs.server.api.handler.SignUpHandler;
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ public class LibsServer {
                                                             nestedAuth.handler("login", new LogInHandler());
                                                         }
                                                 );
+                                                nested.handler("library/:user/:library?", new LibraryHandler());
                                             }
                                     )
                     )).start();

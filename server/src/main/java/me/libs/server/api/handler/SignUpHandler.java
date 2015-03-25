@@ -17,7 +17,7 @@ public class SignUpHandler implements Handler {
         HttpMethod method = request.getMethod();
         Response response = context.getResponse();
         if (method.isPut()) {
-            response.contentType("application/json").send("{\"apiKey:\": \"blerg\"}");
+            response.status(201).contentType("application/json").send("{\"apiKey:\": \"blerg\"}");
         } else {
             context.next();
         }

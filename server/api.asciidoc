@@ -68,6 +68,7 @@ Fetch an existing library.
 [source,javascript]
 Status: 200 OK
 {
+    "name": "library",
     "geoLocation (optional)": "point"
 }
 
