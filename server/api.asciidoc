@@ -51,12 +51,12 @@ Fetch all existing library.
 Status: 200 OK
 [
     {
-        "id", "id",
+        "id": "id",
         "name": "library1",
         "geoLocation (optional)": "point"
     },
     {
-        "id", "id",
+        "id": "id",
         "name": "library2",
         "geoLocation (optional)": "point"
     }
@@ -70,7 +70,7 @@ Fetch an existing library.
 [source,javascript]
 Status: 200 OK
 {
-    "id", "id",
+    "id": "id",
     "name": "library",
     "geoLocation (optional)": "point"
 }
@@ -88,13 +88,13 @@ Create a new library.
 [source,javascript]
 Status: 201 CREATED
 {
-    "id":"id"
+    "id": "id"
 }
 
 === Update Library
  POST /library/:user/:library
 
-Update the details of an existing library
+Update the details of an existing library.
 
 [source,javascript]
 {
@@ -128,7 +128,7 @@ Create a new book.
 [source,javascript]
 Status: 201 CREATED
 {
-    "id":"id"
+    "id": "id"
 }
 
 === Get Book
@@ -139,7 +139,7 @@ Create a new book.
 Status: 200 OK
 [source,javascript]
 {
-    "id":"id",
+    "id": "id",
     "authors": ["Jim Koogleshreiber", "John Boochmacher"],
     "title": "Necronomicon",
     "isbn (optional)": "978-0380751921",

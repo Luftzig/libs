@@ -1,5 +1,6 @@
 package me.libs.server;
 
+import me.libs.server.api.handler.BookHandler;
 import me.libs.server.api.handler.LibraryHandler;
 import me.libs.server.api.handler.LogInHandler;
 import me.libs.server.api.handler.SignUpHandler;
@@ -20,7 +21,7 @@ public class LibsServer {
             RatpackServer.of(b -> b
                     .serverConfig(ServerConfig.findBaseDirProps())
                     .handlers(chain -> chain
-                                    .handler("hello", context -> context.render("Hello Libs :)")) // Map to /foo
+                                    .handler("hello", context -> context.render("Hello Libs :)"))
                                     .prefix("api/v1", nested -> {
                                                 nested.prefix("auth", nestedAuth -> {
                                                             nestedAuth.handler("signup", new SignUpHandler());
@@ -28,6 +29,7 @@ public class LibsServer {
                                                         }
                                                 );
                                                 nested.handler("library/:user/:library?", new LibraryHandler());
+                                                nested.handler("book/:id?", new BookHandler());
                                             }
                                     )
                     )).start();
