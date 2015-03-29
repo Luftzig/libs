@@ -51,10 +51,12 @@ Fetch all existing library.
 Status: 200 OK
 [
     {
+        "id", "id",
         "name": "library1",
         "geoLocation (optional)": "point"
     },
     {
+        "id", "id",
         "name": "library2",
         "geoLocation (optional)": "point"
     }
@@ -68,6 +70,7 @@ Fetch an existing library.
 [source,javascript]
 Status: 200 OK
 {
+    "id", "id",
     "name": "library",
     "geoLocation (optional)": "point"
 }
@@ -84,6 +87,9 @@ Create a new library.
 
 [source,javascript]
 Status: 201 CREATED
+{
+    "id":"id"
+}
 
 === Update Library
  POST /library/:user/:library
@@ -102,5 +108,62 @@ Status: 200 OK
  DELETE /library/:user/:library
 
 Remove an existing library.
+[source,javascript]
+Status: 200 OK
+
+== Book
+=== Create Book
+ PUT /book
+
+Create a new book.
+
+[source,javascript]
+{
+    "authors": ["Jim Koogleshreiber", "John Boochmacher"],
+    "title": "Necronomicon",
+    "isbn (optional)": "978-0380751921",
+    "cover": "link/binary"
+}
+
+[source,javascript]
+Status: 201 CREATED
+{
+    "id":"id"
+}
+
+=== Get Book
+ GET /book/:id
+
+Create a new book.
+
+Status: 200 OK
+[source,javascript]
+{
+    "id":"id",
+    "authors": ["Jim Koogleshreiber", "John Boochmacher"],
+    "title": "Necronomicon",
+    "isbn (optional)": "978-0380751921",
+    "cover": "link/binary"
+}
+
+=== Update Book
+ POST /book/:id
+
+Update the information of an existing book.
+[source,javascript]
+{
+    "authors": ["Jim Koogleshreiber", "John Boochmacher"],
+    "title": "Necronomicon",
+    "isbn (optional)": "978-0380751921",
+    "cover": "link/binary"
+}
+
+[source,javascript]
+Status: 200 OK
+
+=== Remove book
+ DELETE /book/:id
+
+Remove an existing book.
 [source,javascript]
 Status: 200 OK
