@@ -6,7 +6,7 @@ import ratpack.handling.Handler
 /**
  * @author Noam Y. Tenne
  */
-class LoginHandler implements Handler {
+class LogInHandler implements Handler {
     @Override
     void handle(Context context) throws Exception {
         def method = context.request.method;
