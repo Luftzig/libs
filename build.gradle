@@ -22,9 +22,8 @@ project(':server') {
     }
 
     apply plugin: 'java'
-    apply plugin: 'io.ratpack.ratpack-java'
-
-    mainClassName = 'me.libs.server.LibsServer'
+    apply plugin: 'groovy'
+    apply plugin: 'io.ratpack.ratpack-groovy'
 }
 
 project(':book-slicer') {

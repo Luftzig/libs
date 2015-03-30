@@ -1,19 +1,18 @@
-package me.libs.server.api.handler;
+package me.libs.server.api.handler
 
-import ratpack.handling.Context;
-import ratpack.handling.Handler;
-import ratpack.http.HttpMethod;
-import ratpack.http.Request;
-import ratpack.http.Response;
-import ratpack.path.PathTokens;
+import ratpack.handling.Context
+import ratpack.handling.Handler
+import ratpack.http.HttpMethod
+import ratpack.http.Request
+import ratpack.http.Response
+import ratpack.path.PathTokens
 
 /**
  * @author Noam Y. Tenne
  */
-public class LibraryHandler implements Handler {
-
+class LibraryHandler implements Handler {
     @Override
-    public void handle(Context context) throws Exception {
+    void handle(Context context) throws Exception {
         Response response = context.getResponse();
         PathTokens pathTokens = context.getPathTokens();
 
