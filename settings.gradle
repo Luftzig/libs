@@ -16,7 +16,6 @@ include 'api'
 include 'services:webservice'
 */
 
-include 'client'
 include 'server'
 include 'book-slicer'
 
