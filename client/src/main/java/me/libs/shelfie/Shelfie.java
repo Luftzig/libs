@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import me.libs.R;
 
 
 /**
@@ -117,8 +118,7 @@ public class Shelfie extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        View view = inflater.inflate(R.layout.fragment_shelfie, container, false);
-        View view = null;
+        View view = inflater.inflate(R.layout.fragment_shelfie, container, false);
 
         // Create our Preview view and set it as the content of our activity.
         boolean opened = safeCameraOpenInView(view);
@@ -129,16 +129,16 @@ public class Shelfie extends Fragment {
         }
 
         // Trap the capture button.
-//        Button captureButton = (Button) view.findViewById(R.id.button_capture);
-//        captureButton.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        // get an image from the camera
-//                        camera.takePicture(null, null, picture);
-//                    }
-//                }
-//        );
+        Button captureButton = (Button) view.findViewById(R.id.button_capture);
+        captureButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // get an image from the camera
+                        camera.takePicture(null, null, picture);
+                    }
+                }
+        );
 
         return view;
     }
@@ -164,6 +164,7 @@ public class Shelfie extends Fragment {
     public void onDetach() {
         super.onDetach();
         interactionListener = null;
+        releaseCameraAndPreview();
     }
 
     /**
@@ -193,6 +194,7 @@ public class Shelfie extends Fragment {
             if (pictureFile == null){
                 Toast.makeText(getActivity(), "Image retrieval failed.", Toast.LENGTH_SHORT)
                         .show();
+                safeCameraOpenInView(cameraView);
                 return;
             }
 
@@ -200,13 +202,13 @@ public class Shelfie extends Fragment {
                 FileOutputStream fos = new FileOutputStream(pictureFile);
                 fos.write(data);
                 fos.close();
-
-                // Restart the camera preview.
-                safeCameraOpenInView(cameraView);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                // Restart the camera preview.
+                safeCameraOpenInView(cameraView);
             }
         }
     };
