@@ -4,9 +4,27 @@
              android:layout_height="match_parent"
              tools:context="me.libs.shelfie.Shelfie">
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
+    <FrameLayout
+            android:id="@+id/camera_preview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            />
+
+
+    <RelativeLayout
+            android:id="@+id/innerRelativeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" >
+        <Button
+                android:id="@+id/button_capture"
+                android:text="Capture"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:layout_gravity="bottom"
+                />
+    </RelativeLayout>
 
 </FrameLayout>
