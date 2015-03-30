@@ -44,3 +44,7 @@ idea {
         }
     }
 }
+
+task stage {
+    dependsOn ':server:installDist'
+}
