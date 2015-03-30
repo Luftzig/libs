@@ -1,1 +1,1 @@
-web: export RATPACK_OPTS="-Dratpack.port=$PORT" && server/build/install/ratpack/bin/ratpack server/build/install/ratpack/ratpack.groovy
+web: export RATPACK_OPTS="-Dratpack.port=$PORT" && server/build/install/server/bin/server server/build/install/server/app/Ratpack.groovy
