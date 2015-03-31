@@ -1,0 +1,46 @@
+= Libs
+
+image:https://travis-ci.org/libliotech/libs.svg?branch=master["Build Status", link="https://travis-ci.org/libliotech/libs"]
+
+== Client
+
+== Server
+
+.The server is currently:
+* Built with Grade.
+* Written in Groovy.
+* Implemented using Ratpack.
+* Should follow https://github.com/libliotech/libs/blob/master/server/api.asciidoc[this] API spec.
+
+=== Building
+
+Using the Gradle wrapper:
+
+ ./gradlew clean :server:build
+
+=== Running
+
+To run the standalone server:
+
+ ./gradlew run
+
+This will start the server and bind to Ratpack's default port +5050+
+
+=== Usage
+
+==== Test
+
+To test the server you can run:
+
+ noam@serenity:$ curl http://localhost:5050/hello
+
+Which should result in:
+
+ Hello Libs :)
+
+==== API
+
+All documented APIs are accessible under +/api/v[\d]+.
+For example:
+
+ noam@serenity:$ curl -XGET "http://localhost:5050/api/v1/book/0123456789abcdef"
