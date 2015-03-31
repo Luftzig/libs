@@ -1,13 +1,15 @@
 = Libs
 
+== Build
 image:https://travis-ci.org/libliotech/libs.svg?branch=master["Build Status", link="https://travis-ci.org/libliotech/libs"]
+
+Libs is currently built using Gradle and requires JDK 8.
 
 == Client
 
 == Server
 
 .The server is currently:
-* Built with Grade.
 * Written in Groovy.
 * Implemented using Ratpack.
 * Should follow https://github.com/libliotech/libs/blob/master/server/api.asciidoc[this] API spec.
@@ -24,7 +26,7 @@ To run the standalone server:
 
  ./gradlew run
 
-This will start the server and bind to Ratpack's default port +5050+
+This will start the server and bind to Ratpack's default port +5050+.
 
 === Usage
 
