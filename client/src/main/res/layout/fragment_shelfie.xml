@@ -4,52 +4,26 @@
              android:layout_height="match_parent"
              tools:context="me.libs.shelfie.Shelfie">
 
+    <FrameLayout
+            android:id="@+id/camera_preview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="libs"
-        android:id="@+id/libsLoginTitle"
-        android:layout_gravity="center_horizontal|top"
-        android:textColor="#ff2bb222"
-        android:textSize="150dp"
-        android:paddingTop="50dp" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="username"
-        android:ems="10"
-        android:id="@+id/usernameFill"
-        android:layout_gravity="center"
-        android:textColor="#ff2bb222"
-        android:textAlignment="textStart"
-        android:textIsSelectable="false" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="190dp"
-        android:inputType="textPersonName"
-        android:text="password"
-        android:ems="10"
-        android:id="@+id/passwordFill"
-        android:layout_gravity="center"
-        android:textColor="#ff2bb222"
-        android:textAlignment="textStart"
-        android:textIsSelectable="false"
-        android:paddingTop="150dp" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="login"
-        android:id="@+id/loginButton"
-        android:layout_gravity="center"
-        android:layout_marginTop="150dp"
-        android:background="#ff2bb222"
-        android:textColor="#ffffffff" />
+    <RelativeLayout
+            android:id="@+id/innerRelativeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+        <Button
+                android:id="@+id/button_capture"
+                android:text="@string/capture_button_txt"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:layout_gravity="bottom"
+                />
+    </RelativeLayout>
 
 </FrameLayout>
