@@ -37,7 +37,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:inputType="textPersonName"
-                   android:text="username"
+                   android:text="@string/username_placeholder"
                    android:ems="10"
                    android:id="@+id/usernameFill"
                    android:layout_gravity="center"
@@ -49,7 +49,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="50dp"
                    android:inputType="textPassword"
-                   android:text="password"
+                   android:text="@string/password_placeholder"
                    android:ems="10"
                    android:id="@+id/passwordFill"
                    android:imeActionId="@+id/login"
@@ -57,6 +57,7 @@
                    android:textColor="#ff2bb222"
                    android:textAlignment="textStart"
                    android:textIsSelectable="false"
+                   android:paddingTop="0dp" />
                android:singleLine="true" />
 
            <Button
