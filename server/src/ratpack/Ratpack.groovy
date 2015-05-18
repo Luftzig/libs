@@ -5,6 +5,8 @@ import me.libs.server.api.handler.LogInHandler
 import me.libs.server.api.handler.SignUpHandler
 import me.libs.server.persistence.PersistenceService
 import me.libs.server.persistence.PersistenceServiceModule
+import me.libs.server.security.BasicAuthentication
+import ratpack.registry.Registries
 
 import static ratpack.groovy.Groovy.ratpack
 
@@ -23,6 +25,15 @@ ratpack {
                 handler('signup', new SignUpHandler())
                 handler('login', new LogInHandler())
             }
+            handler {
+                def subject = new BasicAuthentication().resolve(context)
+                if (subject) {
+                    context.next(Registries.just(String, subject.username))
+                } else {
+                    context.response.status(401).send()
+                }
+                next()
+            }
             prefix('library') {
                 handler(':user/:library?', new LibraryHandler());
                 handler(':user/:library/book/:id?', new LibraryOperationsHandler());
@@ -30,5 +41,4 @@ ratpack {
             handler('book/:id?', new BookHandler())
         }
     }
-
 }

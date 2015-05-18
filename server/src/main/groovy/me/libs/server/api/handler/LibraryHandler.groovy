@@ -13,6 +13,8 @@ import ratpack.path.PathTokens
 class LibraryHandler implements Handler {
     @Override
     void handle(Context context) throws Exception {
+        println ( "the context ${context.get(String)}")
+
         Response response = context.getResponse();
         PathTokens pathTokens = context.getPathTokens();
 
