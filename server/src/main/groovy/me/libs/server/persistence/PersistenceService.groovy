@@ -17,5 +17,5 @@ interface PersistenceService {
 
     boolean loginApiKey(String username, String password)
 
-    boolean login(String username, String password)
+    boolean login(String username, String hashedPassword)
 }

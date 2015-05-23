@@ -15,7 +15,7 @@ class BasicSecurityService implements SecurityService {
 
     @Override
     Subject login(String username, String password) {
-        if (persistenceService.login(username, password)) {
+        if (persistenceService.login(username, hash(password))) {
             return new Subject(username: username)
         }
         Subject.ANYONYMOUS

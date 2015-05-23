@@ -1,13 +1,14 @@
 package me.libs.server.persistence
 
+import me.libs.server.security.Subject
+
 /**
  * @author Noam Y. Tenne
  */
-class MongoPersistenceService implements PersistenceService {
+class MemoryPersistenceService implements PersistenceService {
 
-    MongoPersistenceService() {
-        println 'its initialized !!! '
-    }
+    private Map<String, String> subjects = []
+    private Map<String, String> apiKeys = [:]
 
     @Override
     String sayHello() {
@@ -16,31 +17,31 @@ class MongoPersistenceService implements PersistenceService {
 
     @Override
     boolean usernameAvailable(String username) {
-        return false
+        subjects.keySet().any { it == username }
     }
 
     @Override
     void signUp(String username, String email, String hashedPassword) {
-
+        subjects.put(username, hashedPassword)
     }
 
     @Override
     String getApiKey(String username) {
-        return null
+        apiKeys.get(username)
     }
 
     @Override
     void setApiKey(String username, String apiKey) {
-
+        apiKeys.put(username, apiKey)
     }
 
     @Override
-    boolean loginApiKey(String username, String password) {
-        return false
+    boolean loginApiKey(String username, String apiKey) {
+        apiKeys.get(username) == apiKey
     }
 
     @Override
     boolean login(String username, String hashedPassword) {
-        return false
+        subjects.get(username) == hashedPassword
     }
 }

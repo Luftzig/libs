@@ -10,6 +10,6 @@ class PersistenceServiceModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(PersistenceService).to(MongoPersistenceService).in(Scopes.SINGLETON)
+        bind(PersistenceService).to(MemoryPersistenceService).in(Scopes.SINGLETON)
     }
 }
