@@ -4,5 +4,11 @@ package me.libs.server.security
  */
 interface SecurityService {
 
-    boolean login()
+    Subject login(String username, String password)
+
+    Subject signUp(String username, String email, String password)
+
+    String getOrCreateApiKey(Subject subject)
+
+    boolean loginApiKey(String username, String apiKey)
 }

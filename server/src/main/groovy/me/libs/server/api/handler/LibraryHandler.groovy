@@ -1,5 +1,6 @@
 package me.libs.server.api.handler
 
+import me.libs.server.security.Subject
 import ratpack.handling.Context
 import ratpack.handling.Handler
 import ratpack.http.HttpMethod
@@ -13,7 +14,7 @@ import ratpack.path.PathTokens
 class LibraryHandler implements Handler {
     @Override
     void handle(Context context) throws Exception {
-        println ( "the context ${context.get(String)}")
+        println ( "the context ${context.get(Subject)}")
 
         Response response = context.getResponse();
         PathTokens pathTokens = context.getPathTokens();

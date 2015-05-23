@@ -1,9 +1,21 @@
 package me.libs.server.persistence
 
 /**
- * @author Noam Y. Tenne
+ * @author Noam Y. Tenne`
  */
 interface PersistenceService {
 
     String sayHello()
+
+    boolean usernameAvailable(String username)
+
+    void signUp(String username, String email, String hashedPassword)
+
+    String getApiKey(String username)
+
+    void setApiKey(String username, String apiKey)
+
+    boolean loginApiKey(String username, String password)
+
+    boolean login(String username, String password)
 }

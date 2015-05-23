@@ -5,7 +5,11 @@ import me.libs.server.api.handler.LogInHandler
 import me.libs.server.api.handler.SignUpHandler
 import me.libs.server.persistence.PersistenceService
 import me.libs.server.persistence.PersistenceServiceModule
-import me.libs.server.security.BasicAuthentication
+import me.libs.server.security.ApiBasicAuthentication
+import me.libs.server.security.SecurityService
+import me.libs.server.security.SecurityServiceModule
+import me.libs.server.security.Subject
+import ratpack.jackson.JacksonModule
 import ratpack.registry.Registries
 
 import static ratpack.groovy.Groovy.ratpack
@@ -13,7 +17,9 @@ import static ratpack.groovy.Groovy.ratpack
 ratpack {
 
     bindings {
+        add new SecurityServiceModule()
         add new PersistenceServiceModule()
+        add new JacksonModule()
     }
 
     handlers {
@@ -25,10 +31,10 @@ ratpack {
                 handler('signup', new SignUpHandler())
                 handler('login', new LogInHandler())
             }
-            handler {
-                def subject = new BasicAuthentication().resolve(context)
+            handler { SecurityService securityService ->
+                def subject = new ApiBasicAuthentication(securityService).resolve(context)
                 if (subject) {
-                    context.next(Registries.just(String, subject.username))
+                    context.next(Registries.just(Subject, subject))
                 } else {
                     context.response.status(401).send()
                 }

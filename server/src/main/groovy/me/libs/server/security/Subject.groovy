@@ -8,4 +8,5 @@ class Subject {
     public static Subject ANYONYMOUS = new Subject(username: 'anonymous')
 
     String username
+    String email
 }

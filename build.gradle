@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'io.ratpack:ratpack-gradle:0.9.14'
+        classpath 'io.ratpack:ratpack-gradle:0.9.16'
     }
 }
 
@@ -24,6 +24,10 @@ project(':server') {
     apply plugin: 'java'
     apply plugin: 'groovy'
     apply plugin: 'io.ratpack.ratpack-groovy'
+
+    dependencies {
+        compile ratpack.dependency('jackson')
+    }
 }
 
 project(':book-slicer') {

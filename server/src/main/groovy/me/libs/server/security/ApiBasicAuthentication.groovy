@@ -5,7 +5,13 @@ import ratpack.handling.Context
 /**
  * @author Noam Y. Tenne
  */
-class BasicAuthentication {
+class ApiBasicAuthentication {
+
+    private SecurityService securityService
+
+    ApiBasicAuthentication(SecurityService securityService) {
+        this.securityService = securityService
+    }
 
     public Subject resolve(Context context) {
         def authorization = context.request.headers.get('Authorization')
@@ -22,6 +28,6 @@ class BasicAuthentication {
         }
 
         println "Our filter is working: ${splitDecodedAuth[0]}-${splitDecodedAuth[1]}"
-        new Subject(username: splitDecodedAuth[0])
+        securityService.loginApiKey(splitDecodedAuth[0], splitDecodedAuth[1])
     }
 }
