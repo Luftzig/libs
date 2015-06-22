@@ -4,6 +4,7 @@ import ratpack.groovy.handling.GroovyContext
 import ratpack.groovy.handling.GroovyHandler
 
 import static io.netty.handler.codec.http.HttpResponseStatus.*
+import static me.libs.server.api.Responses.*
 import static ratpack.http.internal.HttpHeaderConstants.JSON
 
 /**
@@ -65,21 +66,5 @@ class BookHandler extends GroovyHandler {
             return
         }
         groovyContext.response.status(ACCEPTED).send()
-    }
-
-    private boolean noIdSpecified(GroovyContext groovyContext) {
-        !groovyContext.pathTokens.containsKey('id')
-    }
-
-    private void missingId(GroovyContext groovyContext) {
-        groovyContext.response.status(BAD_REQUEST).contentType(JSON).send("{\"errors:\": [\"This command requires a book ID\"]}")
-    }
-
-    private boolean contentIsntJson(GroovyContext groovyContext) {
-        !groovyContext.request.body.contentType.json
-    }
-
-    private void wrongContent(GroovyContext groovyContext) {
-        groovyContext.response.status(BAD_REQUEST).contentType(JSON).send("{\"errors:\": [\"This command requires a JSON body\"]}")
     }
 }

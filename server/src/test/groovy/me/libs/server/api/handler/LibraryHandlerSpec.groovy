@@ -10,35 +10,34 @@ import static io.netty.handler.codec.http.HttpResponseStatus.*
 /**
  * @author Noam Y. Tenne
  */
-class BookHandlerSpec extends Specification {
+class LibraryHandlerSpec extends Specification {
 
-    def 'Get a book by its ID'() {
+    def 'Get a library by its name'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
-            pathBinding(id: '123')
+        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
+            pathBinding(library: 'libz')
         }
 
         expect:
         result.status.code == OK.code()
         def resultBody = new JsonSlurper().parse(result.bodyBytes)
-        resultBody.id == '123'
-        resultBody.authors == ['Jim Koogleshreiber', 'John Boochmacher']
-        resultBody.title == 'Necronomicon'
-        resultBody.isbn == '978-0380751921'
-        resultBody.cover == 'link/binary'
+        resultBody.name == 'libz'
+        resultBody.geoLocation == 'point'
     }
 
-    def 'Get a book but specify no ID'() {
+    def 'Get a library but specify no name'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {}
+        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {}
 
         expect:
-        result.status.code == BAD_REQUEST.code()
+        result.status.code == OK.code()
+        def resultBody = new JsonSlurper().parse(result.bodyBytes)
+        resultBody.size == 2
     }
 
-    def 'Create a new book'() {
+    def 'Create a new library'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
+        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
             method 'PUT'
             body('{}', HttpHeaderConstants.JSON.toString())
         }
@@ -49,9 +48,9 @@ class BookHandlerSpec extends Specification {
         resultBody.id == 'id'
     }
 
-    def 'Create a new book but send no content'() {
+    def 'Create a new library but send no content'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
+        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
             method 'PUT'
         }
 
@@ -59,9 +58,9 @@ class BookHandlerSpec extends Specification {
         result.status.code == BAD_REQUEST.code()
     }
 
-    def 'Update an existing book'() {
+    def 'Update an existing library'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
+        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
             method 'POST'
             pathBinding(id: '123')
             body('{}', HttpHeaderConstants.JSON.toString())
@@ -71,9 +70,9 @@ class BookHandlerSpec extends Specification {
         result.status.code == ACCEPTED.code()
     }
 
-    def 'Update an existing book with no ID'() {
+    def 'Update an existing library with no ID'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
+        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
             method 'POST'
         }
 
@@ -81,9 +80,9 @@ class BookHandlerSpec extends Specification {
         result.status.code == BAD_REQUEST.code()
     }
 
-    def 'Update an existing book with no content'() {
+    def 'Update an existing library with no content'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
+        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
             method 'POST'
             pathBinding(id: '123')
         }
@@ -92,9 +91,9 @@ class BookHandlerSpec extends Specification {
         result.status.code == BAD_REQUEST.code()
     }
 
-    def 'Delete an existing book'() {
+    def 'Delete an existing library'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
+        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
             method 'DELETE'
             pathBinding(id: '123')
         }
@@ -103,9 +102,9 @@ class BookHandlerSpec extends Specification {
         result.status.code == ACCEPTED.code()
     }
 
-    def 'Delete an existing book with no ID'() {
+    def 'Delete an existing library with no ID'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
+        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
             method 'DELETE'
         }
 

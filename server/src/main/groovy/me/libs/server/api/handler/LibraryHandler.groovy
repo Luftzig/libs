@@ -1,41 +1,69 @@
 package me.libs.server.api.handler
 
-import me.libs.server.security.Subject
-import ratpack.handling.Context
-import ratpack.handling.Handler
-import ratpack.http.HttpMethod
-import ratpack.http.Request
-import ratpack.http.Response
-import ratpack.path.PathTokens
+import ratpack.groovy.handling.GroovyContext
+import ratpack.groovy.handling.GroovyHandler
+
+import static io.netty.handler.codec.http.HttpResponseStatus.*
+import static me.libs.server.api.Responses.*
+import static ratpack.http.internal.HttpHeaderConstants.JSON
 
 /**
  * @author Noam Y. Tenne
  */
-class LibraryHandler implements Handler {
+class LibraryHandler extends GroovyHandler {
+
     @Override
-    void handle(Context context) throws Exception {
-        println ( "the context ${context.get(Subject)}")
-
-        Response response = context.getResponse();
-        PathTokens pathTokens = context.getPathTokens();
-
-        Request request = context.getRequest();
-        HttpMethod method = request.getMethod();
-        if (pathTokens.containsKey("library")) {
-            if (method.isGet()) {
-                response.contentType("application/json").send("{ \"name\": \"library\",\"geoLocation\": \"point\"}");
-            } else if (method.isPut()) {
-                response.status(200).send("Library " + pathTokens.get("library") + " has been created.");
-            } else if (method.isPost()) {
-                response.status(200).send("Library " + pathTokens.get("library") + " has been updated.");
-            } else if (method.isDelete()) {
-                response.send("Library " + pathTokens.get("library") + " has been removed.");
+    protected void handle(GroovyContext context) {
+        context.byMethod {
+            get {
+                libraries(context)
             }
-        } else {
-            if (method.isGet()) {
-                response.contentType("application/json").send("[{ \"name\": \"library1\",\"geoLocation\": \"point\"}," +
-                        "{\"name\": \"library2\",\"geoLocation\": \"point\"}]");
+            put {
+                addLibrary(context)
+            }
+            post {
+                updateLibrary(context)
+            }
+            delete {
+                deleteLibrary(context)
             }
         }
+    }
+
+    private void libraries(GroovyContext groovyContext) {
+        if (groovyContext.pathTokens.containsKey('library')) {
+            groovyContext.response.contentType(JSON).status(OK).send("{ \"name\": \"${groovyContext.pathTokens.library}\",\"geoLocation\": \"point\"}");
+        } else {
+            groovyContext.response.contentType(JSON).status(OK).send("[{ \"name\": \"library1\",\"geoLocation\": \"point\"}," +
+                    "{\"name\": \"library2\",\"geoLocation\": \"point\"}]");
+        }
+    }
+
+    private void addLibrary(GroovyContext groovyContext) {
+        if (contentIsntJson(groovyContext)) {
+            wrongContent(groovyContext)
+            return
+        }
+        groovyContext.response.status(CREATED).contentType(JSON).send('{ "id": "id" }')
+    }
+
+    private void updateLibrary(GroovyContext groovyContext) {
+        if (noIdSpecified(groovyContext)) {
+            missingId(groovyContext)
+            return
+        }
+        if (contentIsntJson(groovyContext)) {
+            wrongContent(groovyContext)
+            return
+        }
+        groovyContext.response.status(ACCEPTED).send()
+    }
+
+    private void deleteLibrary(GroovyContext groovyContext) {
+        if (noIdSpecified(groovyContext)) {
+            missingId(groovyContext)
+            return
+        }
+        groovyContext.response.status(ACCEPTED).send()
     }
 }
