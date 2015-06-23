@@ -1,11 +1,11 @@
 package me.libs.server.api.handler
 
 import groovy.json.JsonSlurper
-import ratpack.groovy.test.handling.internal.DefaultGroovyRequestFixture
 import ratpack.http.internal.HttpHeaderConstants
 import spock.lang.Specification
 
 import static io.netty.handler.codec.http.HttpResponseStatus.*
+import static ratpack.groovy.test.handling.GroovyRequestFixture.handle
 
 /**
  * @author Noam Y. Tenne
@@ -14,7 +14,7 @@ class LibraryHandlerSpec extends Specification {
 
     def 'Get a library by its name'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
+        def result = handle(new LibraryHandler()) {
             pathBinding(library: 'libz')
         }
 
@@ -27,7 +27,7 @@ class LibraryHandlerSpec extends Specification {
 
     def 'Get a library but specify no name'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {}
+        def result = handle(new LibraryHandler()) {}
 
         expect:
         result.status.code == OK.code()
@@ -37,7 +37,7 @@ class LibraryHandlerSpec extends Specification {
 
     def 'Create a new library'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
+        def result = handle(new LibraryHandler()) {
             method 'PUT'
             body('{}', HttpHeaderConstants.JSON.toString())
         }
@@ -50,7 +50,7 @@ class LibraryHandlerSpec extends Specification {
 
     def 'Create a new library but send no content'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
+        def result = handle(new LibraryHandler()) {
             method 'PUT'
         }
 
@@ -60,7 +60,7 @@ class LibraryHandlerSpec extends Specification {
 
     def 'Update an existing library'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
+        def result = handle(new LibraryHandler()) {
             method 'POST'
             pathBinding(id: '123')
             body('{}', HttpHeaderConstants.JSON.toString())
@@ -72,7 +72,7 @@ class LibraryHandlerSpec extends Specification {
 
     def 'Update an existing library with no ID'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
+        def result = handle(new LibraryHandler()) {
             method 'POST'
         }
 
@@ -82,7 +82,7 @@ class LibraryHandlerSpec extends Specification {
 
     def 'Update an existing library with no content'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
+        def result = handle(new LibraryHandler()) {
             method 'POST'
             pathBinding(id: '123')
         }
@@ -93,7 +93,7 @@ class LibraryHandlerSpec extends Specification {
 
     def 'Delete an existing library'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
+        def result = handle(new LibraryHandler()) {
             method 'DELETE'
             pathBinding(id: '123')
         }
@@ -104,7 +104,7 @@ class LibraryHandlerSpec extends Specification {
 
     def 'Delete an existing library with no ID'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new LibraryHandler()) {
+        def result = handle(new LibraryHandler()) {
             method 'DELETE'
         }
 

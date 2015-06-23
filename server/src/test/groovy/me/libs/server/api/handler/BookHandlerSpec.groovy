@@ -1,11 +1,11 @@
 package me.libs.server.api.handler
 
 import groovy.json.JsonSlurper
-import ratpack.groovy.test.handling.internal.DefaultGroovyRequestFixture
 import ratpack.http.internal.HttpHeaderConstants
 import spock.lang.Specification
 
 import static io.netty.handler.codec.http.HttpResponseStatus.*
+import static ratpack.groovy.test.handling.GroovyRequestFixture.handle
 
 /**
  * @author Noam Y. Tenne
@@ -14,7 +14,7 @@ class BookHandlerSpec extends Specification {
 
     def 'Get a book by its ID'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
+        def result = handle(new BookHandler()) {
             pathBinding(id: '123')
         }
 
@@ -30,7 +30,7 @@ class BookHandlerSpec extends Specification {
 
     def 'Get a book but specify no ID'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {}
+        def result = handle(new BookHandler()) {}
 
         expect:
         result.status.code == BAD_REQUEST.code()
@@ -38,7 +38,7 @@ class BookHandlerSpec extends Specification {
 
     def 'Create a new book'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
+        def result = handle(new BookHandler()) {
             method 'PUT'
             body('{}', HttpHeaderConstants.JSON.toString())
         }
@@ -51,7 +51,7 @@ class BookHandlerSpec extends Specification {
 
     def 'Create a new book but send no content'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
+        def result = handle(new BookHandler()) {
             method 'PUT'
         }
 
@@ -61,7 +61,7 @@ class BookHandlerSpec extends Specification {
 
     def 'Update an existing book'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
+        def result = handle(new BookHandler()) {
             method 'POST'
             pathBinding(id: '123')
             body('{}', HttpHeaderConstants.JSON.toString())
@@ -73,7 +73,7 @@ class BookHandlerSpec extends Specification {
 
     def 'Update an existing book with no ID'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
+        def result = handle(new BookHandler()) {
             method 'POST'
         }
 
@@ -83,7 +83,7 @@ class BookHandlerSpec extends Specification {
 
     def 'Update an existing book with no content'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
+        def result = handle(new BookHandler()) {
             method 'POST'
             pathBinding(id: '123')
         }
@@ -94,7 +94,7 @@ class BookHandlerSpec extends Specification {
 
     def 'Delete an existing book'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
+        def result = handle(new BookHandler()) {
             method 'DELETE'
             pathBinding(id: '123')
         }
@@ -105,7 +105,7 @@ class BookHandlerSpec extends Specification {
 
     def 'Delete an existing book with no ID'() {
         setup:
-        def result = DefaultGroovyRequestFixture.handle(new BookHandler()) {
+        def result = handle(new BookHandler()) {
             method 'DELETE'
         }
 

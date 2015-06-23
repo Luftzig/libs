@@ -32,10 +32,10 @@ class LibraryHandler extends GroovyHandler {
 
     private void libraries(GroovyContext groovyContext) {
         if (groovyContext.pathTokens.containsKey('library')) {
-            groovyContext.response.contentType(JSON).status(OK).send("{ \"name\": \"${groovyContext.pathTokens.library}\",\"geoLocation\": \"point\"}");
+            groovyContext.response.contentType(JSON).status(OK).send("{ \"name\": \"${groovyContext.pathTokens.library}\",\"geoLocation\": \"point\"}")
         } else {
             groovyContext.response.contentType(JSON).status(OK).send("[{ \"name\": \"library1\",\"geoLocation\": \"point\"}," +
-                    "{\"name\": \"library2\",\"geoLocation\": \"point\"}]");
+                    "{\"name\": \"library2\",\"geoLocation\": \"point\"}]")
         }
     }
 
