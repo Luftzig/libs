@@ -60,8 +60,8 @@ class LogInHandler extends GroovyHandler {
         }
     }
 
-    private void reportAndRespondError(Response response, String username, Throwable t) {
+    private void reportAndRespondError(GroovyContext context, String username, Throwable t) {
         log.error("An exception occurred while trying to log in user ${username}", t)
-        response.status(INTERNAL_SERVER_ERROR).contentType(JSON).send("{\"errors\": [\"${t.message}\"]}")
+        Responses.internalError(context, t)
     }
 }

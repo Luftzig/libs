@@ -1,39 +1,49 @@
 package me.libs.server.api.handler
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.google.inject.Inject
+import groovy.json.JsonSlurper
 import groovy.util.logging.Slf4j
+import me.libs.server.api.Responses
 import me.libs.server.security.SecurityService
 import me.libs.server.security.UsernameUnavailableException
-import ratpack.handling.Context
-import ratpack.handling.Handler
+import ratpack.groovy.handling.GroovyContext
+import ratpack.groovy.handling.GroovyHandler
+
+import static io.netty.handler.codec.http.HttpResponseStatus.CONFLICT
+import static io.netty.handler.codec.http.HttpResponseStatus.OK
+import static ratpack.http.internal.HttpHeaderConstants.JSON
 
 /**
  * @author Noam Y. Tenne
  */
 @Slf4j
-class SignUpHandler implements Handler {
+class SignUpHandler extends GroovyHandler {
 
     @Inject
     SecurityService securityService
 
     @Override
-    void handle(Context context) throws Exception {
-        def method = context.request.method
-        if (method.isPut()) {
-            JsonNode node = context.parse(jsonNode())
-            def username = node.get('username').asText()
-            def email = node.get('email').asText()
-            def password = node.get('password').asText()
-            try {
-                def subject = securityService.signUp(username, email, password)
-                def apiKey = securityService.getOrCreateApiKey(subject)
-                context.response.status(201).contentType('application/json').send("{\"apiKey:\": \"$apiKey\"")
-            } catch (UsernameUnavailableException uue) {
-                context.response.status(409).contentType('application/json').send("{\"errors:\": [\"${uue.message}\"]")
-            } catch (Exception e) {
-                log.error("An exception occurred while trying to sign-up user ${username}", e)
-                context.response.status(500).contentType('application/json').send("{\"errors:\": [\"${e.message}\"]")
+    protected void handle(GroovyContext context) {
+        context.byMethod {
+            put {
+                if (Responses.contentIsntJson(context)) {
+                    Responses.wrongContent(context)
+                    return
+                }
+                def jsonBody = new JsonSlurper().parse(request.body.bytes)
+                def username = jsonBody.username
+                def email = jsonBody.email
+                def password = jsonBody.password
+                try {
+                    def subject = securityService.signUp(username, email, password)
+                    def apiKey = securityService.getOrCreateApiKey(subject)
+                    context.response.status(OK).contentType(JSON).send("{\"apiKey\": \"$apiKey\"}")
+                } catch (UsernameUnavailableException uue) {
+                    context.response.status(CONFLICT).contentType(JSON).send("{\"errors\": [\"${uue.message}\"]}")
+                } catch (Throwable t) {
+                    log.error("An exception occurred while trying to sign-up user ${username}", t)
+                    Responses.internalError(context, t)
+                }
             }
         }
     }
