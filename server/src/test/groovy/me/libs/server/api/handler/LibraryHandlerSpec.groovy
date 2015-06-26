@@ -4,8 +4,8 @@ import groovy.json.JsonSlurper
 import ratpack.http.internal.HttpHeaderConstants
 import spock.lang.Specification
 
-import static io.netty.handler.codec.http.HttpResponseStatus.*
 import static ratpack.groovy.test.handling.GroovyRequestFixture.handle
+import static ratpack.http.Status.OK
 
 /**
  * @author Noam Y. Tenne
@@ -19,7 +19,7 @@ class LibraryHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == OK.code()
+        result.status.code == OK.code
         def resultBody = new JsonSlurper().parse(result.bodyBytes)
         resultBody.name == 'libz'
         resultBody.geoLocation == 'point'
@@ -30,7 +30,7 @@ class LibraryHandlerSpec extends Specification {
         def result = handle(new LibraryHandler()) {}
 
         expect:
-        result.status.code == OK.code()
+        result.status.code == OK.code
         def resultBody = new JsonSlurper().parse(result.bodyBytes)
         resultBody.size == 2
     }
@@ -43,7 +43,7 @@ class LibraryHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == CREATED.code()
+        result.status.code == 201
         def resultBody = new JsonSlurper().parse(result.bodyBytes)
         resultBody.id == 'id'
     }
@@ -55,7 +55,7 @@ class LibraryHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == BAD_REQUEST.code()
+        result.status.code == 400
     }
 
     def 'Update an existing library'() {
@@ -67,7 +67,7 @@ class LibraryHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == ACCEPTED.code()
+        result.status.code == 202
     }
 
     def 'Update an existing library with no ID'() {
@@ -77,7 +77,7 @@ class LibraryHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == BAD_REQUEST.code()
+        result.status.code == 400
     }
 
     def 'Update an existing library with no content'() {
@@ -88,7 +88,7 @@ class LibraryHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == BAD_REQUEST.code()
+        result.status.code == 400
     }
 
     def 'Delete an existing library'() {
@@ -99,7 +99,7 @@ class LibraryHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == ACCEPTED.code()
+        result.status.code == 202
     }
 
     def 'Delete an existing library with no ID'() {
@@ -109,6 +109,6 @@ class LibraryHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == BAD_REQUEST.code()
+        result.status.code == 400
     }
 }

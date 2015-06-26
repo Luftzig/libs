@@ -3,8 +3,8 @@ package me.libs.server.api.handler
 import ratpack.groovy.handling.GroovyContext
 import ratpack.groovy.handling.GroovyHandler
 
-import static io.netty.handler.codec.http.HttpResponseStatus.*
 import static me.libs.server.api.Responses.*
+import static ratpack.http.Status.OK
 import static ratpack.http.internal.HttpHeaderConstants.JSON
 
 /**
@@ -44,7 +44,7 @@ class LibraryHandler extends GroovyHandler {
             wrongContent(groovyContext)
             return
         }
-        groovyContext.response.status(CREATED).contentType(JSON).send('{ "id": "id" }')
+        groovyContext.response.status(201).contentType(JSON).send('{ "id": "id" }')
     }
 
     private void updateLibrary(GroovyContext groovyContext) {
@@ -56,7 +56,7 @@ class LibraryHandler extends GroovyHandler {
             wrongContent(groovyContext)
             return
         }
-        groovyContext.response.status(ACCEPTED).send()
+        groovyContext.response.status(202).send()
     }
 
     private void deleteLibrary(GroovyContext groovyContext) {
@@ -64,6 +64,6 @@ class LibraryHandler extends GroovyHandler {
             missingId(groovyContext)
             return
         }
-        groovyContext.response.status(ACCEPTED).send()
+        groovyContext.response.status(202).send()
     }
 }

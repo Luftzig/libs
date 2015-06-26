@@ -3,11 +3,12 @@ package me.libs.server.api.handler
 import groovy.json.JsonSlurper
 import me.libs.server.security.SecurityService
 import me.libs.server.security.Subject
+import ratpack.http.Status
 import spock.lang.Specification
 
 import static io.netty.handler.codec.http.HttpHeaderNames.WWW_AUTHENTICATE
-import static io.netty.handler.codec.http.HttpResponseStatus.*
 import static ratpack.groovy.test.handling.GroovyRequestFixture.handle
+import static ratpack.http.Status.OK
 import static ratpack.http.internal.HttpHeaderConstants.JSON
 
 /**
@@ -22,7 +23,7 @@ class LogInHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == BAD_REQUEST.code()
+        result.status.code == 400
     }
 
     def 'Login empty credentials'() {
@@ -39,7 +40,7 @@ class LogInHandlerSpec extends Specification {
 
         then:
         1 * securityService.login('', '') >> Subject.ANYONYMOUS
-        result.status.code == UNAUTHORIZED.code()
+        result.status.code == 401
         result.headers.get(WWW_AUTHENTICATE) == 'Basic realm="libs-api"'
     }
 
@@ -57,7 +58,7 @@ class LogInHandlerSpec extends Specification {
 
         then:
         1 * securityService.login('jim', 'bob') >> Subject.ANYONYMOUS
-        result.status.code == UNAUTHORIZED.code()
+        result.status.code == 401
         result.headers.get(WWW_AUTHENTICATE) == 'Basic realm="libs-api"'
     }
 
@@ -75,7 +76,7 @@ class LogInHandlerSpec extends Specification {
 
         then:
         1 * securityService.login('jim', 'bob') >> { throw new RuntimeException('moo') }
-        result.status.code == INTERNAL_SERVER_ERROR.code()
+        result.status.code == 500
         def resultBody = new JsonSlurper().parse(result.bodyBytes)
         resultBody.errors.first() == 'moo'
     }
@@ -97,7 +98,7 @@ class LogInHandlerSpec extends Specification {
         1 * securityService.login('jim', 'bob') >> subject
         1 * securityService.getOrCreateApiKey(subject) >> { throw new RuntimeException('moo') }
 
-        result.status.code == INTERNAL_SERVER_ERROR.code()
+        result.status.code == 500
         def resultBody = new JsonSlurper().parse(result.bodyBytes)
         resultBody.errors.first() == 'moo'
     }
@@ -119,7 +120,7 @@ class LogInHandlerSpec extends Specification {
         1 * securityService.login('jim', 'bob') >> subject
         1 * securityService.getOrCreateApiKey(subject) >> 'apiKey'
 
-        result.status.code == OK.code()
+        result.status.code == OK.code
         def resultBody = new JsonSlurper().parse(result.bodyBytes)
         resultBody.apiKey == 'apiKey'
     }

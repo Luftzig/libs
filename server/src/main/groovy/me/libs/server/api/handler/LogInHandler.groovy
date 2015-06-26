@@ -8,10 +8,9 @@ import me.libs.server.security.SecurityService
 import me.libs.server.security.Subject
 import ratpack.groovy.handling.GroovyContext
 import ratpack.groovy.handling.GroovyHandler
+import ratpack.http.Status
 
 import static io.netty.handler.codec.http.HttpHeaderNames.WWW_AUTHENTICATE
-import static io.netty.handler.codec.http.HttpResponseStatus.OK
-import static io.netty.handler.codec.http.HttpResponseStatus.UNAUTHORIZED
 import static ratpack.http.internal.HttpHeaderConstants.JSON
 
 /**
@@ -43,7 +42,7 @@ class LogInHandler extends GroovyHandler {
                 }
 
                 if (subject == Subject.ANYONYMOUS) {
-                    def response = response.status(UNAUTHORIZED)
+                    def response = response.status(401)
                     response.headers.add(WWW_AUTHENTICATE, 'Basic realm="libs-api"')
                     response.send()
                     return
@@ -51,7 +50,7 @@ class LogInHandler extends GroovyHandler {
 
                 try {
                     def apiKey = securityService.getOrCreateApiKey(subject)
-                    response.contentType(JSON).status(OK).send("{\"apiKey\": \"$apiKey\"}")
+                    response.contentType(JSON).status(Status.OK).send("{\"apiKey\": \"$apiKey\"}")
                 } catch (Throwable t) {
                     reportAndRespondError(context, username, t)
                 }

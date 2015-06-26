@@ -4,13 +4,11 @@ import groovy.json.JsonSlurper
 import me.libs.server.security.SecurityService
 import me.libs.server.security.Subject
 import me.libs.server.security.UsernameUnavailableException
+import ratpack.http.Status
 import spock.lang.Specification
 
-import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST
-import static io.netty.handler.codec.http.HttpResponseStatus.CONFLICT
-import static io.netty.handler.codec.http.HttpResponseStatus.INTERNAL_SERVER_ERROR
-import static io.netty.handler.codec.http.HttpResponseStatus.OK
 import static ratpack.groovy.test.handling.GroovyRequestFixture.handle
+import static ratpack.http.Status.OK
 import static ratpack.http.internal.HttpHeaderConstants.JSON
 
 /**
@@ -25,7 +23,7 @@ class SignUpHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == BAD_REQUEST.code()
+        result.status.code == 400
     }
 
     def 'Sign up with an already existing user'() {
@@ -43,7 +41,7 @@ class SignUpHandlerSpec extends Specification {
 
         then:
         1 * securityService.signUp('jim', 'jim@jim.com', 'bob') >> { throw e }
-        result.status.code == CONFLICT.code()
+        result.status.code == 409
         def resultBody = new JsonSlurper().parse(result.bodyBytes)
         resultBody.errors.first() == e.message
     }
@@ -62,7 +60,7 @@ class SignUpHandlerSpec extends Specification {
 
         then:
         1 * securityService.signUp('jim', 'jim@jim.com', 'bob') >> { throw new RuntimeException('moo') }
-        result.status.code == INTERNAL_SERVER_ERROR.code()
+        result.status.code == 500
         def resultBody = new JsonSlurper().parse(result.bodyBytes)
         resultBody.errors.first() == 'moo'
     }
@@ -83,7 +81,7 @@ class SignUpHandlerSpec extends Specification {
         then:
         1 * securityService.signUp('jim', 'jim@jim.com', 'bob') >> subject
         1 * securityService.getOrCreateApiKey(subject) >> 'apiKey'
-        result.status.code == OK.code()
+        result.status.code == OK.code
         def resultBody = new JsonSlurper().parse(result.bodyBytes)
         resultBody.apiKey == 'apiKey'
     }

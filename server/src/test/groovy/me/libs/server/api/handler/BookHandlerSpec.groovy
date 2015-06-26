@@ -4,8 +4,8 @@ import groovy.json.JsonSlurper
 import ratpack.http.internal.HttpHeaderConstants
 import spock.lang.Specification
 
-import static io.netty.handler.codec.http.HttpResponseStatus.*
 import static ratpack.groovy.test.handling.GroovyRequestFixture.handle
+import static ratpack.http.Status.OK
 
 /**
  * @author Noam Y. Tenne
@@ -19,7 +19,7 @@ class BookHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == OK.code()
+        result.status.code == OK.code
         def resultBody = new JsonSlurper().parse(result.bodyBytes)
         resultBody.id == '123'
         resultBody.authors == ['Jim Koogleshreiber', 'John Boochmacher']
@@ -33,7 +33,7 @@ class BookHandlerSpec extends Specification {
         def result = handle(new BookHandler()) {}
 
         expect:
-        result.status.code == BAD_REQUEST.code()
+        result.status.code == 400
     }
 
     def 'Create a new book'() {
@@ -44,7 +44,7 @@ class BookHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == CREATED.code()
+        result.status.code == 201
         def resultBody = new JsonSlurper().parse(result.bodyBytes)
         resultBody.id == 'id'
     }
@@ -56,7 +56,7 @@ class BookHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == BAD_REQUEST.code()
+        result.status.code == 400
     }
 
     def 'Update an existing book'() {
@@ -68,7 +68,7 @@ class BookHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == ACCEPTED.code()
+        result.status.code == 202
     }
 
     def 'Update an existing book with no ID'() {
@@ -78,7 +78,7 @@ class BookHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == BAD_REQUEST.code()
+        result.status.code == 400
     }
 
     def 'Update an existing book with no content'() {
@@ -89,7 +89,7 @@ class BookHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == BAD_REQUEST.code()
+        result.status.code == 400
     }
 
     def 'Delete an existing book'() {
@@ -100,7 +100,7 @@ class BookHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == ACCEPTED.code()
+        result.status.code == 202
     }
 
     def 'Delete an existing book with no ID'() {
@@ -110,6 +110,6 @@ class BookHandlerSpec extends Specification {
         }
 
         expect:
-        result.status.code == BAD_REQUEST.code()
+        result.status.code == 400
     }
 }

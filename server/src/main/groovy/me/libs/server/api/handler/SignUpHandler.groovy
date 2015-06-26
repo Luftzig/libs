@@ -8,9 +8,8 @@ import me.libs.server.security.SecurityService
 import me.libs.server.security.UsernameUnavailableException
 import ratpack.groovy.handling.GroovyContext
 import ratpack.groovy.handling.GroovyHandler
+import ratpack.http.Status
 
-import static io.netty.handler.codec.http.HttpResponseStatus.CONFLICT
-import static io.netty.handler.codec.http.HttpResponseStatus.OK
 import static ratpack.http.internal.HttpHeaderConstants.JSON
 
 /**
@@ -37,9 +36,9 @@ class SignUpHandler extends GroovyHandler {
                 try {
                     def subject = securityService.signUp(username, email, password)
                     def apiKey = securityService.getOrCreateApiKey(subject)
-                    context.response.status(OK).contentType(JSON).send("{\"apiKey\": \"$apiKey\"}")
+                    context.response.status(Status.OK).contentType(JSON).send("{\"apiKey\": \"$apiKey\"}")
                 } catch (UsernameUnavailableException uue) {
-                    context.response.status(CONFLICT).contentType(JSON).send("{\"errors\": [\"${uue.message}\"]}")
+                    context.response.status(409).contentType(JSON).send("{\"errors\": [\"${uue.message}\"]}")
                 } catch (Throwable t) {
                     log.error("An exception occurred while trying to sign-up user ${username}", t)
                     Responses.internalError(context, t)
