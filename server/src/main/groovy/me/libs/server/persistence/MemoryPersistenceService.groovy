@@ -7,7 +7,7 @@ import me.libs.server.security.Subject
  */
 class MemoryPersistenceService implements PersistenceService {
 
-    private Map<String, String> subjects = []
+    private Map<String, String> subjects = [:]
     private Map<String, String> apiKeys = [:]
 
     @Override

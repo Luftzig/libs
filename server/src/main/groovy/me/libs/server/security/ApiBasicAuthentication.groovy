@@ -27,7 +27,6 @@ class ApiBasicAuthentication {
             return Subject.ANYONYMOUS
         }
 
-        println "Our filter is working: ${splitDecodedAuth[0]}-${splitDecodedAuth[1]}"
         securityService.loginApiKey(splitDecodedAuth[0], splitDecodedAuth[1])
     }
 }
