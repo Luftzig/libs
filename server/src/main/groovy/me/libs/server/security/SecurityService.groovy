@@ -10,5 +10,5 @@ interface SecurityService {
 
     String getOrCreateApiKey(Subject subject)
 
-    boolean loginApiKey(String username, String apiKey)
+    Subject loginApiKey(String username, String apiKey)
 }

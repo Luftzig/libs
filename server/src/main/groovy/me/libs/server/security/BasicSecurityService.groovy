@@ -44,7 +44,7 @@ class BasicSecurityService implements SecurityService {
     }
 
     @Override
-    boolean loginApiKey(String username, String apiKey) {
+    Subject loginApiKey(String username, String apiKey) {
         persistenceService.loginApiKey(username, apiKey)
     }
 

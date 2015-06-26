@@ -32,11 +32,11 @@ ratpack {
                 handler('login', new LogInHandler())
             }
             handler { SecurityService securityService ->
-                def subject = new ApiBasicAuthentication(securityService).resolve(context)
+                def subject = new ApiBasicAuthentication(securityService).resolve(response.headers)
                 if (subject) {
-                    context.next(Registries.just(Subject, subject))
+                    next(Registries.just(Subject, subject))
                 } else {
-                    context.response.status(401).send()
+                    response.status(401).send()
                 }
                 next()
             }

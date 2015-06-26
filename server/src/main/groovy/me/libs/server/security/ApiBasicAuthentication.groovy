@@ -1,6 +1,11 @@
 package me.libs.server.security
 
+import io.netty.handler.codec.http.HttpHeaderNames
 import ratpack.handling.Context
+import ratpack.http.Headers
+import ratpack.http.MutableHeaders
+
+import static io.netty.handler.codec.http.HttpHeaderNames.AUTHORIZATION
 
 /**
  * @author Noam Y. Tenne
@@ -13,10 +18,12 @@ class ApiBasicAuthentication {
         this.securityService = securityService
     }
 
-    public Subject resolve(Context context) {
-        def authorization = context.request.headers.get('Authorization')
-        println "Auth = $authorization"
-        if (!authorization || !authorization.startsWith('Basic ')) {
+    public Subject resolve(Headers headers) {
+        if (!headers.contains(AUTHORIZATION)) {
+            return Subject.ANYONYMOUS
+        }
+        def authorization = headers.get(AUTHORIZATION)
+        if (!authorization.startsWith('Basic ')) {
             return Subject.ANYONYMOUS
         }
 
