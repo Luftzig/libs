@@ -1,9 +1,6 @@
 package me.libs.server.security
 
-import io.netty.handler.codec.http.HttpHeaderNames
-import ratpack.handling.Context
 import ratpack.http.Headers
-import ratpack.http.MutableHeaders
 
 import static io.netty.handler.codec.http.HttpHeaderNames.AUTHORIZATION
 

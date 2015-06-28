@@ -45,7 +45,10 @@ class BasicSecurityService implements SecurityService {
 
     @Override
     Subject loginApiKey(String username, String apiKey) {
-        persistenceService.loginApiKey(username, apiKey)
+        if (persistenceService.loginApiKey(username, apiKey)) {
+            return new Subject(username: username)
+        }
+        Subject.ANYONYMOUS
     }
 
     private String createNewKey() {
