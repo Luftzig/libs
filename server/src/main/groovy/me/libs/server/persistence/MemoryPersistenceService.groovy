@@ -1,7 +1,4 @@
 package me.libs.server.persistence
-
-import me.libs.server.security.Subject
-
 /**
  * @author Noam Y. Tenne
  */

@@ -1,13 +1,15 @@
 package me.libs.server.persistence
 
+import com.google.inject.Inject
+import com.mongodb.MongoClient
+
 /**
  * @author Noam Y. Tenne
  */
 class MongoPersistenceService implements PersistenceService {
 
-    MongoPersistenceService() {
-        println 'its initialized !!! '
-    }
+    @Inject
+    MongoClient mongoClient
 
     @Override
     String sayHello() {
