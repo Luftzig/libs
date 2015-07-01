@@ -5,6 +5,7 @@ buildscript {
     dependencies {
         classpath 'io.ratpack:ratpack-gradle:0.9.17'
         classpath 'net.saliman:gradle-cobertura-plugin:2.2.8'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.4.0'
     }
 }
 
@@ -26,6 +27,7 @@ project(':server') {
     apply plugin: 'groovy'
     apply plugin: 'io.ratpack.ratpack-groovy'
     apply plugin: 'net.saliman.cobertura'
+    apply plugin: 'com.github.kt3k.coveralls'
 
     dependencies {
         compile ratpack.dependency('jackson')
@@ -44,13 +46,12 @@ project(':server') {
     }
 
     cobertura {
+        coverageSourceDirs = sourceSets.main.groovy.srcDirs
         coverageFormats = ['html', 'xml']
         coverageIgnoreTrivial = true
         coverageIgnores = ['org.slf4j.Logger.*']
         coverageReportDir = new File("$buildDir/reports/cobertura")
     }
-
-    test.finalizedBy(project.tasks.cobertura)
 }
 
 project(':book-slicer') {
