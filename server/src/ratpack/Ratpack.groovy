@@ -17,9 +17,9 @@ import static ratpack.groovy.Groovy.ratpack
 ratpack {
 
     bindings {
-        add new SecurityServiceModule()
-        add new PersistenceServiceModule()
-        add new JacksonModule()
+        module SecurityServiceModule
+        module PersistenceServiceModule
+        module JacksonModule
     }
 
     handlers {
