@@ -1,6 +1,7 @@
 package me.libs.server.persistence
 
 import com.google.inject.Inject
+import com.mongodb.BasicDBObject
 import com.mongodb.MongoClient
 
 /**
@@ -13,7 +14,7 @@ class MongoPersistenceService implements PersistenceService {
 
     @Override
     String sayHello() {
-        'Hello Libs :)'
+        "Hello Libs :) - Using Mongo version: ${mongoClient.getDatabase('libs').runCommand(new BasicDBObject('buildInfo', '')).getString('version')}"
     }
 
     @Override
