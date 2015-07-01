@@ -2,6 +2,7 @@
 
 == Build
 image:https://travis-ci.org/libliotech/libs.svg?branch=master["Build Status", link="https://travis-ci.org/libliotech/libs"]
+image:https://coveralls.io/repos/libliotech/libs/badge.svg?branch=master["Coverage Status", link="https://coveralls.io/r/libliotech/libs?branch=master"]
 
 Libs is currently built using Gradle and requires JDK 8.
 
