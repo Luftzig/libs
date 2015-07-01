@@ -4,7 +4,7 @@ buildscript {
     }
     dependencies {
         classpath 'io.ratpack:ratpack-gradle:0.9.17'
-        classpath 'net.saliman:gradle-cobertura-plugin:2.2.7'
+        classpath 'net.saliman:gradle-cobertura-plugin:2.2.8'
     }
 }
 
