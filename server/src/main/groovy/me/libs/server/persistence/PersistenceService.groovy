@@ -15,7 +15,7 @@ interface PersistenceService {
 
     void setApiKey(String username, String apiKey)
 
-    boolean loginApiKey(String username, String password)
+    boolean loginApiKey(String username, String apiKey)
 
     boolean login(String username, String hashedPassword)
 }

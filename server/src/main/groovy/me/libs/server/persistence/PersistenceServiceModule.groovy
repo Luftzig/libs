@@ -14,7 +14,8 @@ class PersistenceServiceModule extends AbstractModule {
     protected void configure() {
         def mongoUri = System.getProperty('mongoUri', null)
         if (mongoUri) {
-            bind(MongoClient).toInstance(new MongoClient(new MongoClientURI(mongoUri)))
+            def mongoClient = new MongoClients().get(mongoUri)
+            bind(MongoClient).toInstance(mongoClient)
             bind(PersistenceService).to(MongoPersistenceService).in(Scopes.SINGLETON)
         } else {
             bind(PersistenceService).to(MemoryPersistenceService).in(Scopes.SINGLETON)

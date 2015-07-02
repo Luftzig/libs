@@ -33,6 +33,7 @@ project(':server') {
         compile ratpack.dependency('jackson')
         compile 'org.mongodb:mongodb-driver:3.0.2'
         testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+        testCompile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:1.48.0'
     }
 
     run {
