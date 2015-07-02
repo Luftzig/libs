@@ -3,7 +3,6 @@ package me.libs.server.persistence
 import com.google.inject.AbstractModule
 import com.google.inject.Scopes
 import com.mongodb.MongoClient
-import com.mongodb.MongoClientURI
 
 /**
  * @author Noam Y. Tenne

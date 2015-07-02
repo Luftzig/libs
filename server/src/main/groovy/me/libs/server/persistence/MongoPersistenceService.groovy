@@ -4,6 +4,7 @@ import com.google.inject.Inject
 import com.mongodb.BasicDBObject
 import com.mongodb.MongoClient
 import org.bson.Document
+import org.bson.types.ObjectId
 
 /**
  * @author Noam Y. Tenne
@@ -29,7 +30,7 @@ class MongoPersistenceService implements PersistenceService {
     void signUp(String username, String email, String hashedPassword) {
         def libs = mongoClient.getDatabase('libs')
         def subjects = libs.getCollection('subject')
-        subjects.insertOne(new Document('username', username).append('email', email).append('password', hashedPassword))
+        subjects.insertOne(new Document('_id', ObjectId.get().toString()).append('username', username).append('email', email).append('password', hashedPassword))
     }
 
     @Override
@@ -45,7 +46,11 @@ class MongoPersistenceService implements PersistenceService {
     void setApiKey(String username, String apiKey) {
         def libs = mongoClient.getDatabase('libs')
         def apiKeys = libs.getCollection('apiKey')
-        apiKeys.insertOne(new Document('username', username).append('apiKey', apiKey))
+        if (apiKeys.count(new Document('username', username)) == 0) {
+            apiKeys.insertOne(new Document('_id', ObjectId.get().toString()).append('username', username).append('apiKey', apiKey))
+        } else {
+            apiKeys.updateOne(new Document('username', username), new Document('$set', new Document('apiKey', apiKey)))
+        }
     }
 
     @Override
