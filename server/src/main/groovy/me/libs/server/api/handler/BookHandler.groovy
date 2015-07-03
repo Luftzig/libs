@@ -1,5 +1,6 @@
 package me.libs.server.api.handler
 
+import com.google.inject.Singleton
 import ratpack.groovy.handling.GroovyContext
 import ratpack.groovy.handling.GroovyHandler
 
@@ -10,6 +11,7 @@ import static ratpack.http.internal.HttpHeaderConstants.JSON
 /**
  * @author Noam Y. Tenne
  */
+@Singleton
 class BookHandler extends GroovyHandler {
 
     @Override

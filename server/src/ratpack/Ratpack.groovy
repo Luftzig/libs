@@ -1,4 +1,5 @@
 import me.libs.server.api.handler.BookHandler
+import me.libs.server.api.handler.HandlerModule
 import me.libs.server.api.handler.LibraryHandler
 import me.libs.server.api.handler.LibraryOperationsHandler
 import me.libs.server.api.handler.LogInHandler
@@ -17,9 +18,10 @@ import static ratpack.groovy.Groovy.ratpack
 ratpack {
 
     bindings {
-        module SecurityServiceModule
-        module PersistenceServiceModule
         module JacksonModule
+        module PersistenceServiceModule
+        module SecurityServiceModule
+        module HandlerModule
     }
 
     handlers {
@@ -28,8 +30,8 @@ ratpack {
         }
         prefix('api/v1') {
             prefix('auth') {
-                handler('signup', new SignUpHandler())
-                handler('login', new LogInHandler())
+                handler('signup', SignUpHandler)
+                handler('login', LogInHandler)
             }
             handler { SecurityService securityService ->
                 def subject = new ApiBasicAuthentication(securityService).resolve(response.headers)
@@ -41,8 +43,8 @@ ratpack {
                 next()
             }
             prefix('library') {
-                handler(':user/:library?', new LibraryHandler());
-                handler(':user/:library/book/:id?', new LibraryOperationsHandler());
+                handler(':user/:library?', LibraryHandler);
+                handler(':user/:library/book/:id?', LibraryOperationsHandler);
             }
             handler('book/:id?', new BookHandler())
         }

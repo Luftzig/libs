@@ -1,6 +1,7 @@
 package me.libs.server.api.handler
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import groovy.json.JsonSlurper
 import groovy.util.logging.Slf4j
 import me.libs.server.api.Responses
@@ -17,6 +18,7 @@ import static ratpack.http.internal.HttpHeaderConstants.JSON
  * @author Noam Y. Tenne
  */
 @Slf4j
+@Singleton
 class LogInHandler extends GroovyHandler {
 
     @Inject
