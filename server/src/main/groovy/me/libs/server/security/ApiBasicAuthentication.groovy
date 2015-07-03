@@ -2,7 +2,7 @@ package me.libs.server.security
 
 import ratpack.http.Headers
 
-import static io.netty.handler.codec.http.HttpHeaderNames.AUTHORIZATION
+import static com.google.common.net.HttpHeaders.AUTHORIZATION
 
 /**
  * @author Noam Y. Tenne
