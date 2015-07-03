@@ -108,6 +108,11 @@ class MongoPersistenceServiceSpec extends Specification {
         mongoPersistenceService.getApiKey('jimbob') == 'apiKey'
     }
 
+    def 'Get a non-existing API key'() {
+        expect:
+        !mongoPersistenceService.getApiKey('janeboob')
+    }
+
     def 'Log in with an API key'() {
         setup:
         mongoPersistenceService.setApiKey('joebob', 'apiKey')

@@ -39,7 +39,10 @@ class MongoPersistenceService implements PersistenceService {
         def apiKeys = libs.getCollection('apiKey')
         def results = apiKeys.find(new Document('username', username))
         def apiKey = results.first()
-        apiKey.getString('apiKey')
+        if (apiKey) {
+            return apiKey.getString('apiKey')
+        }
+        null
     }
 
     @Override
