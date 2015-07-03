@@ -44,9 +44,7 @@ class LogInHandler extends GroovyHandler {
                 }
 
                 if (subject == Subject.ANYONYMOUS) {
-                    def response = response.status(401)
-                    response.headers.add(WWW_AUTHENTICATE, 'Basic realm="libs-api"')
-                    response.send()
+                    response.status(401).contentType(JSON).send('{"errors": ["Wrong username or password"]}')
                     return
                 }
 
