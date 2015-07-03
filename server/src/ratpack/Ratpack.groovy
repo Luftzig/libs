@@ -34,7 +34,7 @@ ratpack {
                 handler('login', LogInHandler)
             }
             handler { SecurityService securityService ->
-                def subject = new ApiBasicAuthentication(securityService).resolve(response.headers)
+                def subject = new ApiBasicAuthentication(securityService).resolve(request.headers)
                 if (subject != Subject.ANYONYMOUS) {
                     next(Registries.just(Subject, subject))
                 } else {
