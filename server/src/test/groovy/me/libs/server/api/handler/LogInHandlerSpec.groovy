@@ -41,7 +41,6 @@ class LogInHandlerSpec extends Specification {
         then:
         1 * securityService.login('', '') >> Subject.ANYONYMOUS
         result.status.code == 401
-        result.headers.get(WWW_AUTHENTICATE) == 'Basic realm="libs-api"'
     }
 
     def 'Login wrong credentials'() {
@@ -59,7 +58,6 @@ class LogInHandlerSpec extends Specification {
         then:
         1 * securityService.login('jim', 'bob') >> Subject.ANYONYMOUS
         result.status.code == 401
-        result.headers.get(WWW_AUTHENTICATE) == 'Basic realm="libs-api"'
     }
 
     def 'Login and have the subject lookup fail'() {
