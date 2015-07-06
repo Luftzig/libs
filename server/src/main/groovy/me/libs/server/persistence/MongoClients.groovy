@@ -27,6 +27,10 @@ class MongoClients {
         if (!libs.getCollection('apiKey')) {
             libs.createCollection('apiKey')
         }
+
+        if (!libs.getCollection('book')) {
+            libs.createCollection('book')
+        }
     }
 
     private void ensureIndexes(MongoClient mongoClient) {
