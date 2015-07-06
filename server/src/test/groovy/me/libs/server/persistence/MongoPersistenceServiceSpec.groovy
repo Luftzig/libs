@@ -9,6 +9,7 @@ import de.flapdoodle.embed.mongo.config.MongodConfigBuilder
 import de.flapdoodle.embed.mongo.config.Net
 import de.flapdoodle.embed.mongo.distribution.Version
 import de.flapdoodle.embed.process.runtime.Network
+import me.libs.server.domain.Book
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -119,6 +120,55 @@ class MongoPersistenceServiceSpec extends Specification {
 
         expect:
         mongoPersistenceService.loginApiKey('joebob', 'apiKey')
+    }
+
+    def 'Create and get a book'() {
+        setup:
+        def newBook = new Book(authors: ['author1', 'author2'] as Set, title: 'title', isbn: 'isbn', cover: 'path/to/cover')
+        mongoPersistenceService.createBook(newBook)
+
+        when:
+        def savedBook = mongoPersistenceService.getBook(newBook.id)
+
+        then:
+        savedBook.id == newBook.id
+        savedBook.authors == ['author1', 'author2'] as Set
+        savedBook.title == 'title'
+        savedBook.isbn == 'isbn'
+        savedBook.cover == 'path/to/cover'
+    }
+
+    def 'Delete a book'() {
+        setup:
+        def newBook = new Book(authors: ['author1', 'author2'] as Set, title: 'title2', isbn: 'isbn', cover: 'path/to/cover')
+        newBook = mongoPersistenceService.createBook(newBook)
+
+        when:
+        mongoPersistenceService.deleteBook(newBook.id)
+
+        then:
+        !mongoPersistenceService.getBook(newBook.id)
+    }
+
+    def 'Update a book'() {
+        setup:
+        def newBook = new Book(authors: ['author1', 'author2'] as Set, title: 'title3', isbn: 'isbn', cover: 'path/to/cover')
+        newBook = mongoPersistenceService.createBook(newBook)
+
+        when:
+        newBook.authors = ['author3', 'author4'] as Set
+        newBook.title = 'title4'
+        newBook.isbn = 'isbn2'
+        newBook.cover = 'path/to/cover2'
+        mongoPersistenceService.updateBook(newBook)
+
+        then:
+        def savedBook = mongoPersistenceService.getBook(newBook.id)
+        savedBook.id == newBook.id
+        savedBook.authors == ['author3', 'author4'] as Set
+        savedBook.title == 'title4'
+        savedBook.isbn == 'isbn2'
+        savedBook.cover == 'path/to/cover2'
     }
 
     private MongoDatabase libsDb() {

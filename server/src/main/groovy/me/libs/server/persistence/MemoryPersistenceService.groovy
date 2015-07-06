@@ -1,4 +1,7 @@
 package me.libs.server.persistence
+
+import me.libs.server.domain.Book
+
 /**
  * @author Noam Y. Tenne
  */
@@ -6,6 +9,7 @@ class MemoryPersistenceService implements PersistenceService {
 
     private Map<String, String> subjects = [:]
     private Map<String, String> apiKeys = [:]
+    private Map<String, Book> books = [:]
 
     @Override
     String sayHello() {
@@ -40,5 +44,25 @@ class MemoryPersistenceService implements PersistenceService {
     @Override
     boolean login(String username, String hashedPassword) {
         subjects.get(username) == hashedPassword
+    }
+
+    @Override
+    Book getBook(String id) {
+        books.get(id)
+    }
+
+    @Override
+    Book createBook(Book book) {
+        books.put(book.id, book)
+    }
+
+    @Override
+    void deleteBook(String id) {
+        books.remove(id)
+    }
+
+    @Override
+    void updateBook(Book book) {
+        books.put(book.id, book)
     }
 }
